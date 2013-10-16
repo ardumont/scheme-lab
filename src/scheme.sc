@@ -49,6 +49,8 @@
         ;; other definition here...
         ))
 
+;; run samples
+
 (define foo-fn '(+ (* a (* x x))
                    (+ (* b x))
                    c))
@@ -57,4 +59,17 @@
 ;; (+ 0
 ;;    (+ (* a (+ (* x 1)
 ;;               (* x 1)))
+;;       (* (* x x) 0)))
+
+(deriv foo-fn 'a)
+;; (+ 0
+;;    (+
+;;     (* a (+ (* x 0)
+;;             (* x 0)))
+;;     (* (* x x) 1)))
+
+(deriv foo-fn 'c)
+;; (+ 0
+;;    (+ (* a (+ (* x 0)
+;;               (* x 0)))
 ;;       (* (* x x) 0)))
