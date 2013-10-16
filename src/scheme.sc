@@ -25,11 +25,19 @@
   (and (not (atom? exp))
        (eq? (car exp) '*)))
 
-(define (make-sum exp1 exp2)
-  (list '+ exp1 exp2))
+(define (make-sum a1 a2)
+  (cond ((and (number? a1) (number? a2)) (+ a1 a2))
+        ((and (number? a1) (eq? a1 0))   a2)
+        ((and (number? a2) (eq? a2 0))   a1)
+        (else                            (list '+ a1 a2))))
 
-(define (make-pdt exp1 exp2)
-  (list '* exp1 exp2))
+(define (make-pdt a1 a2)
+  (cond ((and (number? a1) (number? a2)) (* a1 a2))
+        ((and (number? a1) (eq? a1 0))   0)
+        ((and (number? a1) (eq? a1 1))   a2)
+        ((and (number? a2) (eq? a2 0))   0)
+        ((and (number? a2) (eq? a2 1))   a1)
+        (else                            (list '* a1 a2))))
 
 (define a1 car)
 (define a2 cadr)
@@ -44,32 +52,25 @@
                                        (deriv (a2 exp) var)))
         ((pdt? exp)          (make-sum (make-pdt (m1 exp)
                                                  (deriv (m2 exp) var))
-                                       (make-pdt (m2 exp)
-                                                 (deriv (m1 exp) var))))
+                                       (make-pdt (deriv (m1 exp) var)
+                                                 (m2 exp))))
         ;; other definition here...
         ))
 
 ;; run samples
 
 (define foo-fn '(+ (* a (* x x))
-                   (+ (* b x))
-                   c))
+                   (+ (* b x)
+                      c)))
 
 (deriv foo-fn 'x)
-;; (+ 0
-;;    (+ (* a (+ (* x 1)
-;;               (* x 1)))
-;;       (* (* x x) 0)))
+;; (* a (+ x x))
+
+(deriv foo-fn 'b)
+;; o
 
 (deriv foo-fn 'a)
-;; (+ 0
-;;    (+
-;;     (* a (+ (* x 0)
-;;             (* x 0)))
-;;     (* (* x x) 1)))
+;; (* x x)
 
 (deriv foo-fn 'c)
-;; (+ 0
-;;    (+ (* a (+ (* x 0)
-;;               (* x 0)))
-;;       (* (* x x) 0)))
+;; 0
