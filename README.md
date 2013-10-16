@@ -1,4 +1,7 @@
-sicp-lab
-========
+scheme-lab
+==========
 
-"Structure and Interpretation of Computer Programs" hacking
+scheme hacking:
+- sicp
+- little schemer
+- etc...
