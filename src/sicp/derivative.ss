@@ -26,6 +26,9 @@
     (and (atom? exp)
          (eq? exp var)))
 
+(expect #t (same-var? 'x 'x))
+(expect #f (same-var? 'x 'y))
+
 (define (sum? exp) "is the expression a sum?"
   (and (not (atom? exp))
        (eq? (car exp) '+)))
