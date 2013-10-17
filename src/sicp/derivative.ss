@@ -6,13 +6,13 @@
 
 ;; basic test framework
 
-(define true? (lambda (x) (eq? #t x)))
+(define true? (lambda (x) (not (eq? #f x))))
 
 (eq? #t (true? #t))
 (eq? #f (true? #f))
-(eq? #f (true? 1))
-(eq? #f (true? '()))
-(eq? #f (true? '()))
+(eq? #t (true? 1))
+(eq? #t (true? '()))
+(eq? #t (true? '()))
 
 (define (expect exp1 exp2) "Define a basic test framework."
   (cond ((and (atom? exp1) (atom? exp2)) (eq? exp1 exp2))
@@ -77,6 +77,11 @@
         ((and (number? a1) (eq? a1 0))   a2)
         ((and (number? a2) (eq? a2 0))   a1)
         (else                            (list '+ a1 a2))))
+
+(expect 3        (make-sum 1 2))
+(expect 'a       (make-sum 'a 0))
+(expect 'b       (make-sum 0 'b))
+(expect '(+ a b) (make-sum 'a 'b))
 
 (define (make-pdt a1 a2) "Make a product expression."
   (cond ((and (number? a1) (number? a2)) (* a1 a2))
