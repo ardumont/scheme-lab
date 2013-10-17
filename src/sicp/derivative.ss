@@ -15,29 +15,29 @@
 (expect #t (atom? "a"))
 (expect #f (atom? '(a)))
 
-(define (constant? exp var)
+(define (constant? exp var) "is the exp a constant in respect to var?"
   (and (atom? exp)
        (not (eq? exp var))))
 
-(define (same-var? exp var)
+(define (same-var? exp var) "is the exp a variable in respect to var?"
     (and (atom? exp)
          (eq? exp var)))
 
-(define (sum? exp)
+(define (sum? exp) "is the expression a sum?"
   (and (not (atom? exp))
        (eq? (car exp) '+)))
 
-(define (pdt? exp)
+(define (pdt? exp) "is the expression a product?"
   (and (not (atom? exp))
        (eq? (car exp) '*)))
 
-(define (make-sum a1 a2)
+(define (make-sum a1 a2) "Make a sum expression."
   (cond ((and (number? a1) (number? a2)) (+ a1 a2))
         ((and (number? a1) (eq? a1 0))   a2)
         ((and (number? a2) (eq? a2 0))   a1)
         (else                            (list '+ a1 a2))))
 
-(define (make-pdt a1 a2)
+(define (make-pdt a1 a2) "Make a product expression."
   (cond ((and (number? a1) (number? a2)) (* a1 a2))
         ((and (number? a1) (eq? a1 0))   0)
         ((and (number? a1) (eq? a1 1))   a2)
@@ -51,7 +51,7 @@
 (define m1 cadr)
 (define m2 caddr)
 
-(define (deriv exp var)
+(define (deriv exp var) "Compute the derivation of the expression exp in respect to the variable var."
   (cond ((constant? exp var) 0)
         ((same-var? exp var) 1)
         ((sum? exp)          (make-sum (deriv (a1 exp) var)
