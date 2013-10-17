@@ -8,7 +8,7 @@
 
 (define expect eq?)
 
-(define (atom? x)
+(define (atom? x) "Define atom? which should already be defined by scheme."
   (and (not (pair? x))
        (not (null? x))))
 
