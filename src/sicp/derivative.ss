@@ -91,6 +91,13 @@
         ((and (number? a2) (eq? a2 1))   a1)
         (else                            (list '* a1 a2))))
 
+(expect 2        (make-pdt 1 2))
+(expect 'a       (make-pdt 'a 1))
+(expect 0        (make-pdt 'a 0))
+(expect 'b       (make-pdt 1 'b))
+(expect 0        (make-pdt 0 'b))
+(expect '(* a b) (make-pdt 'a 'b))
+
 (define a1 car)
 (define a2 cadr)
 
