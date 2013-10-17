@@ -45,6 +45,11 @@
   (and (not (atom? exp))
        (eq? (car exp) '*)))
 
+(expect #t (pdt? '(* a b)))
+(expect #f (pdt? '(+ a b)))
+(expect #f (pdt? 'a))
+(expect #f (pdt? '(a)))
+
 (define (make-sum a1 a2) "Make a sum expression."
   (cond ((and (number? a1) (number? a2)) (+ a1 a2))
         ((and (number? a1) (eq? a1 0))   a2)
