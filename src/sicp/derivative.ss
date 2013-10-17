@@ -6,7 +6,29 @@
 
 ;; basic test framework
 
-(define expect eq?)
+(define true? (lambda (x) (eq? #t x)))
+
+(eq? #t (true? #t))
+(eq? #f (true? #f))
+(eq? #f (true? 1))
+(eq? #f (true? '()))
+(eq? #f (true? '()))
+
+(define (expect exp1 exp2) "Define a basic test framework."
+  (cond ((and (atom? exp1) (atom? exp2)) (eq? exp1 exp2))
+        ((atom? exp1)                    #f)
+        ((atom? exp2)                    #f)
+        (else                            (and (eq? (length exp1) (length exp2))
+                                              (every true? (map expect exp1 exp2))))))
+
+(expect #t (expect 'a 'a))
+(expect #t (expect '() '()))
+(expect #t (expect '(a) '(a)))
+(expect #t (expect '(a (x y)) '(a (x y))))
+(expect #f (expect '(a) '(a b)))
+(expect #f (expect '(a (x x)) '(a (x y))))
+(expect #f (expect 'a 'b))
+(expect #f (expect 'a '()))
 
 (define (atom? x) "Define atom? which should already be defined by scheme."
   (and (not (pair? x))
