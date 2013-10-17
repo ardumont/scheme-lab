@@ -4,7 +4,10 @@
 ;;                                 (f x))
 ;;                              dx))))
 
-;; should already be defined by scheme
+;; basic test framework
+
+(define expect eq?)
+
 (define (atom? x)
   (and (not (pair? x))
        (not (null? x))))
