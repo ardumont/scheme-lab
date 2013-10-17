@@ -19,6 +19,9 @@
   (and (atom? exp)
        (not (eq? exp var))))
 
+(expect #t (constant? 'a 'x))
+(expect #f (constant? 'a 'a))
+
 (define (same-var? exp var) "is the exp a variable in respect to var?"
     (and (atom? exp)
          (eq? exp var)))
