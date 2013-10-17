@@ -36,6 +36,11 @@
   (and (not (atom? exp))
        (eq? (car exp) '+)))
 
+(expect #t (sum? '(+ a b)))
+(expect #f (sum? '(* a b)))
+(expect #f (sum? 'a))
+(expect #f (sum? '(a)))
+
 (define (pdt? exp) "is the expression a product?"
   (and (not (atom? exp))
        (eq? (car exp) '*)))
