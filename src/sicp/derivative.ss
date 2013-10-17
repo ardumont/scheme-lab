@@ -12,6 +12,9 @@
   (and (not (pair? x))
        (not (null? x))))
 
+(expect #t (atom? "a"))
+(expect #f (atom? '(a)))
+
 (define (constant? exp var)
   (and (atom? exp)
        (not (eq? exp var))))
