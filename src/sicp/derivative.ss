@@ -21,6 +21,8 @@
 
 (expect #t (constant? 'a 'x))
 (expect #f (constant? 'a 'a))
+(expect #f (constant? '(a) 'x))
+(expect #f (constant? '(a) 'a))
 
 (define (same-var? exp var) "is the exp a variable in respect to var?"
     (and (atom? exp)
@@ -28,6 +30,7 @@
 
 (expect #t (same-var? 'x 'x))
 (expect #f (same-var? 'x 'y))
+(expect #f (same-var? '(x) 'x))
 
 (define (sum? exp) "is the expression a sum?"
   (and (not (atom? exp))
