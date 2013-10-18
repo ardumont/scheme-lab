@@ -118,18 +118,11 @@
 
 ;; run samples
 
-(define foo-fn '(+ (* a (* x x))
-                   (+ (* b x)
-                      c)))
+(define foo-fn-exp '(+ (* a (* x x))
+                       (+ (* b x)
+                          c)))
 
-(deriv foo-fn 'x)
-;; (* a (+ x x))
-
-(deriv foo-fn 'b)
-;; o
-
-(deriv foo-fn 'a)
-;; (* x x)
-
-(deriv foo-fn 'c)
-;; 0
+(expect '(* a (+ x x)) (deriv foo-fn-exp 'x))
+(expect 0              (deriv foo-fn-exp 'b))
+(expect '(* x x)       (deriv foo-fn-exp 'a))
+(expect 0              (deriv foo-fn-exp 'c))
