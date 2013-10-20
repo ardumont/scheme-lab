@@ -1,10 +1,4 @@
-;; derivation computation (wait, where does dx come from?)
-;; (define deriv
-;;   (lambda (f) (lambda (x) (/ (- (f (+ x dx))
-;;                                 (f x))
-;;                              dx))))
-
-;; basic test framework
+;; ######### basic test framework
 
 (define true? (lambda (x) (not (eq? #f x))))
 
@@ -38,6 +32,8 @@
  (expect #f (expect 'a 'b))
  (expect #f (expect 'a '())))
 
+;; ######### basic brick
+
 (define (atom? x) "Define atom? which should already be defined by scheme."
   (and (not (pair? x))
        (not (null? x))))
@@ -45,6 +41,14 @@
 (expectations
  (expect #t (atom? "a"))
  (expect #f (atom? '(a))))
+
+;; ######### basic derivative
+
+;; derivation computation (wait, where does dx come from?)
+;; (define deriv
+;;   (lambda (f) (lambda (x) (/ (- (f (+ x dx))
+;;                                 (f x))
+;;                              dx))))
 
 (define (constant? exp var) "is the exp a constant in respect to var?"
   (and (atom? exp)
